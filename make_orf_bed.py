@@ -30,8 +30,14 @@ if opts.color:
 with open(opts.inbed, 'rU') as inbed:
     bedlinedict = {line.split()[3]: line for line in inbed}
 
-ratedorfs = pd.read_hdf(opts.ratingsfile, 'orfratings', mode='r', columns=['orfname', 'tid', 'gcoord', 'gstop', 'strand', 'orfrating'],
-                        where="orfrating >= %f and AAlen >= %d" % (opts.minrating, opts.minlen))
+# ratedorfs = pd.read_hdf(opts.ratingsfile, 'orfratings', mode='r', columns=['orfname', 'tid', 'gcoord', 'gstop', 'strand', 'orfrating'],
+#                         where="orfrating >= %f and AAlen >= %d" % (opts.minrating, opts.minlen))
+
+ratedorfs = pd.read_hdf(opts.ratingsfile, 'orfratings', mode='r', columns=['orfname', 'tid', 'gcoord', 'gstop', 'strand', 'orfrating', 'AAlen'])
+
+ratedorfs=ratedorfs.loc[(ratedorfs.orfrating >= 0.6) & (ratedorfs.AAlen >= 10)]
+
+
 if ratedorfs.empty:
     raise IOError('No ORFs of minimum rating %f and length %d identified!' % (opts.minrating, opts.minlen))
 
