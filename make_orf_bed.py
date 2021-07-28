@@ -35,7 +35,7 @@ with open(opts.inbed, 'rU') as inbed:
 
 ratedorfs = pd.read_hdf(opts.ratingsfile, 'orfratings', mode='r', columns=['orfname', 'tid', 'gcoord', 'gstop', 'strand', 'orfrating', 'AAlen'])
 
-ratedorfs=ratedorfs.loc[(ratedorfs.orfrating >= 0.6) & (ratedorfs.AAlen >= 10)]
+ratedorfs=ratedorfs.loc[(ratedorfs.orfrating >= 0.6) & (ratedorfs.AAlen >= 5)]
 
 
 if ratedorfs.empty:
